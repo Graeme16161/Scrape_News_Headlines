@@ -23,11 +23,16 @@ class NewsSpider(Spider):
              
              headline = row.xpath('./span[1]/a/text()').extract_first()
              
-             #//*[@id="newsContent"]/div/p[3]/span[2]/a[1]
-             source = row.xpath('./span[2]/a[1]/text()').extract_first()
              
              #//*[@id="newsContent"]/div/p[4]/span[2]/text()[1]
              date = row.xpath('./span[2]/text()[1]').extract_first()
+             
+             if "Reuters" in date:
+                 source = "Reuters"
+                 date = date.split("-")[0]
+             #//*[@id="newsContent"]/div/p[3]/span[2]/a[1]
+             else:
+                 source = row.xpath('./span[2]/a[1]/text()').extract_first()
              
              
              item = NasdaqheadlinesItem()
