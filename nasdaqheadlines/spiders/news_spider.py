@@ -6,6 +6,7 @@ Created on Thu Jun 27 14:09:21 2019
 """
 
 from scrapy import Spider
+from scrapy import Request
 from nasdaqheadlines.items import NasdaqheadlinesItem
 
 class NewsSpider(Spider):
@@ -14,6 +15,20 @@ class NewsSpider(Spider):
     start_urls = ['https://www.nasdaq.com/news/market-headlines.aspx']
     
     def parse(self, response):
+        
+        next_url = response.xpath('//*[@id="two_column_main_content_lb_NextPage"]/@href')
+        
+        for item in self.scrape(response):
+            yield item
+        
+        if next_url:
+            path = next_url.extract_first()
+            nextpage = response.urljoin(path)
+            print("Found url: {}".format(nextpage))
+            yield Request(nextpage, callback=self.parse)
+    
+    
+    def scrape(self, response):
         
         #//*[@id="newsContent"]/div/p[1]
         #//*[@id="newsContent"]/div/p[3]
@@ -41,3 +56,12 @@ class NewsSpider(Spider):
              item['date'] = date
              
              yield item
+             
+
+        
+        
+        
+        
+        
+        
+        
