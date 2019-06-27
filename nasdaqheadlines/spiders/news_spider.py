@@ -34,3 +34,5 @@ class NewsSpider(Spider):
              item['headline'] = headline
              item['source'] = source
              item['date'] = date
+             
+             yield item

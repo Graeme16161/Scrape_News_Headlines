@@ -14,6 +14,8 @@ BOT_NAME = 'nasdaqheadlines'
 SPIDER_MODULES = ['nasdaqheadlines.spiders']
 NEWSPIDER_MODULE = 'nasdaqheadlines.spiders'
 
+ITEM_PIPELINES = {'nasdaqheadlines.pipelines.WriteItemPipeline': 200}
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'nasdaqheadlines (+http://www.yourdomain.com)'
