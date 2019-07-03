@@ -4,14 +4,16 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-
+import datetime
 
 from scrapy.exporters import CsvItemExporter
 
 class WriteItemPipeline(object):
 
     def __init__(self):
-        self.filename = 'nasdaw_headlines_data.csv'
+        #t = datetime.datetime.now()
+        #self.filename = 'nasdaq_headlines_' + t.strftime('%Y%m%d') + '.csv'
+        self.filename = 'nasdaq_headlines.csv'
 
     def open_spider(self, spider):
         self.csvfile = open(self.filename, 'wb')
